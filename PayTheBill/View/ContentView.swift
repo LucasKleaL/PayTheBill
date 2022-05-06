@@ -11,13 +11,16 @@ struct ContentView: View {
     
     let aqua = Color("aqua")
     
-    @State var goToDashboard = false
+    @State var goToHomeView = false
     var body: some View {
         
         NavigationView {
             VStack {
                 
                 Spacer()
+                Image("Bill Minimal Logo")
+                    .resizable()
+                    .frame(width: 100, height: 100)
                 Text("Bem vindo(a) ao Pay The Bill!")
                     .padding()
                 
@@ -31,17 +34,20 @@ struct ContentView: View {
                         .stroke(lineWidth: 1)
                     )
                 
-                Button("Continuar") {
-                    goToDashboard = true
+                Button {
+                    goToHomeView = true
+                } label : {
+                    Text("Continuar")
+                    Image(systemName: "arrow.forward")
                 }
+                
                 .buttonStyle(.bordered)
                 .padding()
                 
                 Spacer()
-                NavigationLink(destination: DashboardView(), isActive: $goToDashboard) {
+                NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
                     
                 }
-                
             }
         }
     }

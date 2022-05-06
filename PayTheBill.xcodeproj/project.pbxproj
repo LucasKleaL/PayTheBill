@@ -7,20 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1EACD87D2821EFE900648949 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EACD87C2821EFE900648949 /* DashboardView.swift */; };
 		1EEB582C2821DAC2000E713E /* PayTheBillApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582B2821DAC2000E713E /* PayTheBillApp.swift */; };
 		1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582D2821DAC2000E713E /* ContentView.swift */; };
 		1EEB58302821DAC3000E713E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEB582F2821DAC3000E713E /* Assets.xcassets */; };
 		1EEB58332821DAC3000E713E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEB58322821DAC3000E713E /* Preview Assets.xcassets */; };
+		BC09AC652824809D000C5246 /* AddDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09AC642824809D000C5246 /* AddDashboardView.swift */; };
+		BC09AC67282482B1000C5246 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09AC66282482B1000C5246 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1EACD87C2821EFE900648949 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1EEB58282821DAC2000E713E /* PayTheBill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayTheBill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EEB582B2821DAC2000E713E /* PayTheBillApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayTheBillApp.swift; sourceTree = "<group>"; };
 		1EEB582D2821DAC2000E713E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1EEB582F2821DAC3000E713E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1EEB58322821DAC3000E713E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BC09AC642824809D000C5246 /* AddDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDashboardView.swift; sourceTree = "<group>"; };
+		BC09AC66282482B1000C5246 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +40,8 @@
 			isa = PBXGroup;
 			children = (
 				1EEB582D2821DAC2000E713E /* ContentView.swift */,
-				1EACD87C2821EFE900648949 /* DashboardView.swift */,
+				BC09AC642824809D000C5246 /* AddDashboardView.swift */,
+				BC09AC66282482B1000C5246 /* HomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -165,7 +168,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */,
-				1EACD87D2821EFE900648949 /* DashboardView.swift in Sources */,
+				BC09AC67282482B1000C5246 /* HomeView.swift in Sources */,
+				BC09AC652824809D000C5246 /* AddDashboardView.swift in Sources */,
 				1EEB582C2821DAC2000E713E /* PayTheBillApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +307,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,6 +337,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
