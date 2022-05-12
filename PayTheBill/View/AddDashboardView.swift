@@ -10,10 +10,11 @@ import SwiftUI
 struct AddDashboardView: View {
     
     @State var goToHomeView = false
+    @State var goToAddNewBillView = false
     
     var body: some View {
         
-        NavigationView {
+        
             
             ZStack {
                 
@@ -41,91 +42,109 @@ struct AddDashboardView: View {
                     // first button cards stack
                     HStack {
                         
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(Color("CardDarkPurple"))
-                            .opacity(0.9)
-                            .frame(width: 130, height: 130)
-                            .padding(.horizontal)
-                            .overlay(
-                                VStack {
-                                    Image(systemName: "person")
-                                        .resizable()
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .frame(width: 30, height: 30)
-                                        
-                                    Text("Personal bill")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                        
-                                })
-            
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(Color("CardDarkPurple"))
-                            .opacity(0.9)
-                            .frame(width: 130, height: 130)
-                            .overlay(
-                                VStack {
-                                    Image(systemName: "house")
-                                        .resizable()
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .frame(width: 30, height: 30)
-                                        
-                                    Text("Home bill")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                        
-                                })
+                        NavigationLink(destination: AddNewBillView(), isActive: $goToAddNewBillView) {
+                            Button {
+                                goToAddNewBillView = true
+                            } label: {
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(Color("CardDarkPurple"))
+                                    .opacity(0.9)
+                                    .frame(width: 130, height: 130)
+                                    .padding(.horizontal)
+                                    .overlay(
+                                        VStack {
+                                            Image(systemName: "person")
+                                                .resizable()
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .frame(width: 30, height: 30)
+                                                
+                                            Text("Personal bill")
+                                                .font(.caption)
+                                                .fontWeight(.medium)
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .multilineTextAlignment(.center)
+                                                .lineLimit(2)
+                                                
+                                        })
+                            }
+                        }
+                        
+                        Button {
+                            // action
+                        } label: {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(Color("CardDarkPurple"))
+                                .opacity(0.9)
+                                .frame(width: 130, height: 130)
+                                .overlay(
+                                    VStack {
+                                        Image(systemName: "house")
+                                            .resizable()
+                                            .foregroundColor(Color("InteractionPink"))
+                                            .frame(width: 30, height: 30)
+                                            
+                                        Text("Home bill")
+                                            .font(.caption)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Color("InteractionPink"))
+                                            .multilineTextAlignment(.center)
+                                            .lineLimit(2)
+                                            
+                                    })
+                        }
+                        
                     }
                     
                     // second button cards stack
                     HStack {
+                        Button {
+                            //action
+                        } label : {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(Color("CardDarkPurple"))
+                                .opacity(0.9)
+                                .frame(width: 130, height: 130)
+                                .padding(.horizontal)
+                                .overlay(
+                                    VStack {
+                                        Image(systemName: "cart")
+                                            .resizable()
+                                            .foregroundColor(Color("InteractionPink"))
+                                            .frame(width: 30, height: 30)
+                                            
+                                        Text("Purchase bill")
+                                            .font(.caption)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Color("InteractionPink"))
+                                            .multilineTextAlignment(.center)
+                                            .lineLimit(2)
+                                            
+                                    })
+                        }
                         
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(Color("CardDarkPurple"))
-                            .opacity(0.9)
-                            .frame(width: 130, height: 130)
-                            .padding(.horizontal)
-                            .overlay(
-                                VStack {
-                                    Image(systemName: "cart")
-                                        .resizable()
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .frame(width: 30, height: 30)
-                                        
-                                    Text("Purchase bill")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                        
-                                })
-                        
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(Color("CardDarkPurple"))
-                            .opacity(0.9)
-                            .frame(width: 130, height: 130)
-                            .overlay(
-                                VStack {
-                                    Image(systemName: "briefcase")
-                                        .resizable()
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .frame(width: 30, height: 30)
-                                        
-                                    Text("Work bill")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(Color("InteractionPink"))
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                        
-                                })
+                        Button {
+                            // action
+                        } label: {
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(Color("CardDarkPurple"))
+                                .opacity(0.9)
+                                .frame(width: 130, height: 130)
+                                .overlay(
+                                    VStack {
+                                        Image(systemName: "briefcase")
+                                            .resizable()
+                                            .foregroundColor(Color("InteractionPink"))
+                                            .frame(width: 30, height: 30)
+                                            
+                                        Text("Work bill")
+                                            .font(.caption)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Color("InteractionPink"))
+                                            .multilineTextAlignment(.center)
+                                            .lineLimit(2)
+                                            
+                                    })
+                        }
                         
                     }
                     
@@ -139,15 +158,17 @@ struct AddDashboardView: View {
                         .overlay(
                             HStack {
                                 
-                                Button {
-                                    goToHomeView = true
-                                } label: {
-                                    Image(systemName: "house")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundColor(Color("DisabledPurple"))
+                                NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
+                                    Button {
+                                        goToHomeView = true
+                                    } label: {
+                                        Image(systemName: "house")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .foregroundColor(Color("DisabledPurple"))
+                                    }
+                                    .padding(.horizontal, 20.0)
                                 }
-                                .padding(.horizontal, 20.0)
                                 
                                 Button {
                                     //action
@@ -158,6 +179,7 @@ struct AddDashboardView: View {
                                         .foregroundColor(Color("InteractionPink"))
                                 }
                                 .padding(.horizontal, 20.0)
+                                
                                 
                                 Button {
                                     //action
@@ -181,12 +203,14 @@ struct AddDashboardView: View {
                                 
                             }
                         )
-                    NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
-                        
-                    }
+                    
                 }
+                /*NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
+                    
+                }*/
             }.edgesIgnoringSafeArea(.all)
-        }.navigationBarBackButtonHidden(true)
+            .navigationBarBackButtonHidden(true)
+            .navigationViewStyle(.stack)
         
     }
 }

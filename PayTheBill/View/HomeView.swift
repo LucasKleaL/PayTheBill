@@ -12,7 +12,6 @@ struct HomeView: View {
     @State var goToAddDashboard = false
     
     var body: some View {
-        NavigationView {
             
             ZStack {
                 
@@ -41,15 +40,17 @@ struct HomeView: View {
                                     }
                                     .padding(.horizontal, 20.0)
                                     
-                                    Button {
-                                        goToAddDashboard = true
-                                    } label: {
-                                        Image(systemName: "plus.app")
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .foregroundColor(Color("DisabledPurple"))
+                                    NavigationLink(destination: AddDashboardView(), isActive: $goToAddDashboard) {
+                                        Button {
+                                            goToAddDashboard = true
+                                        } label: {
+                                            Image(systemName: "plus.app")
+                                                .resizable()
+                                                .frame(width: 30, height: 30)
+                                                .foregroundColor(Color("DisabledPurple"))
+                                        }
+                                        .padding(.horizontal, 20.0)
                                     }
-                                    .padding(.horizontal, 20.0)
                                     
                                     Button {
                                         //action
@@ -73,17 +74,10 @@ struct HomeView: View {
                                     
                                 }
                             )
-                        
-                        NavigationLink(destination: AddDashboardView(), isActive: $goToAddDashboard) {
-                            
-                        }
-                        
-                    
                 }
-                
             }.edgesIgnoringSafeArea(.all)
-        }.navigationBarBackButtonHidden(true)
-        
+            .navigationBarBackButtonHidden(true)
+            .navigationViewStyle(.stack)
     }
 }
 
