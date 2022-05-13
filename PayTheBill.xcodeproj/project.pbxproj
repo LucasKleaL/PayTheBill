@@ -10,6 +10,8 @@
 		1E148CF9282C911000137B54 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E148CF8282C911000137B54 /* GoogleService-Info.plist */; };
 		1E148CFC282C962500137B54 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1E148CFB282C962500137B54 /* FirebaseAuth */; };
 		1E148CFE282C962500137B54 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1E148CFD282C962500137B54 /* FirebaseFirestore */; };
+		1E1D38C0282D8AF100C284FA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1D38BF282D8AF100C284FA /* LoginView.swift */; };
+		1E1D38C2282DB5E800C284FA /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1D38C1282DB5E800C284FA /* SignUpView.swift */; };
 		1EEB582C2821DAC2000E713E /* PayTheBillApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582B2821DAC2000E713E /* PayTheBillApp.swift */; };
 		1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582D2821DAC2000E713E /* ContentView.swift */; };
 		1EEB58302821DAC3000E713E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEB582F2821DAC3000E713E /* Assets.xcassets */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		1E148CF8282C911000137B54 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1E1D38BF282D8AF100C284FA /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1E1D38C1282DB5E800C284FA /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1EEB58282821DAC2000E713E /* PayTheBill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayTheBill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EEB582B2821DAC2000E713E /* PayTheBillApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayTheBillApp.swift; sourceTree = "<group>"; };
 		1EEB582D2821DAC2000E713E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +57,8 @@
 				BC09AC642824809D000C5246 /* AddDashboardView.swift */,
 				BC09AC66282482B1000C5246 /* HomeView.swift */,
 				BC848AFA2824B03F00CC9983 /* AddNewBillView.swift */,
+				1E1D38BF282D8AF100C284FA /* LoginView.swift */,
+				1E1D38C1282DB5E800C284FA /* SignUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,8 +195,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCEDFAAC282B46D000169088 /* AppDelegate.swift in Sources */,
+				1E1D38C0282D8AF100C284FA /* LoginView.swift in Sources */,
 				BC848AFB2824B03F00CC9983 /* AddNewBillView.swift in Sources */,
 				1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */,
+				1E1D38C2282DB5E800C284FA /* SignUpView.swift in Sources */,
 				BC09AC67282482B1000C5246 /* HomeView.swift in Sources */,
 				BC09AC652824809D000C5246 /* AddDashboardView.swift in Sources */,
 				1EEB582C2821DAC2000E713E /* PayTheBillApp.swift in Sources */,

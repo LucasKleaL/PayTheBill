@@ -11,6 +11,7 @@ import Firebase
 struct ContentView: View {
     
     @State var goToHomeView = false
+    @State var goToLoginView = false
     @State var email = ""
     @State var password = ""
     
@@ -28,54 +29,25 @@ struct ContentView: View {
                     Image("Bill Minimal Logo")
                         .resizable()
                         .frame(width: 100, height: 100)
-                    Text("Bem vindo(a) ao Pay The Bill!")
+                    Text("Welcome to Pay The Bill!")
                         .padding()
-                    
-                    /*
-                    Text("Para iniciar, por favor insira seu nome:")
-                    TextField("Nome completo", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
-                        .frame(width: 280.0, height: 40.0)
-                        .foregroundColor(.black)
-                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                        .cornerRadius(5)
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1)
-                        )
-                    */
-                    
-                    TextField("Email", text: $email)
-                        .frame(width: 280.0, height: 40.0)
                         .foregroundColor(.white)
-                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                        .cornerRadius(5)
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1)
-                        )
                     
-                    TextField("Senha", text: $password)
-                        .frame(width: 280.0, height: 40.0)
-                        .foregroundColor(.white)
-                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                        .cornerRadius(5)
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1)
-                        )
-                    
-                    Button {
-                        //goToHomeView = true
-                        login()
-                    } label : {
-                        Text("Continuar")
-                        Image(systemName: "arrow.forward")
+                    NavigationLink(destination: LoginView(), isActive: $goToLoginView) {
+                        Button {
+                            goToLoginView = true
+                            login()
+                        } label : {
+                            Text("Login")
+                            Image(systemName: "arrow.forward")
+                        }
+                        .buttonStyle(.bordered)
+                        .padding()
+                        .foregroundColor(Color("InteractionPink"))
                     }
-                    .buttonStyle(.bordered)
-                    .padding()
-                    .foregroundColor(Color("InteractionPink"))
                     
                     Spacer()
-                    NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
-                        
-                    }
+                    
                 }
             }
         }
