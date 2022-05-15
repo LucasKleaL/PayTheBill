@@ -12,4 +12,5 @@ struct UserModel: Identifiable, Codable {
     var id: String = UUID().uuidString;
     var userUid: String?;
     var userName: String?;
+    var userBills: Array<String>?;
 }

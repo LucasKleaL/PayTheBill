@@ -12,45 +12,59 @@ struct ContentView: View {
     
     @State var goToHomeView = false
     @State var goToLoginView = false
+    @State var goToSignupView = false
     @State var email = ""
     @State var password = ""
     
     var body: some View {
-        
-        NavigationView {
             
-            ZStack {
+        ZStack {
+            
+            Color("BackgroundDarkPurple").ignoresSafeArea()
+            
+            VStack {
                 
-                Color("BackgroundDarkPurple").ignoresSafeArea()
+                Spacer()
+                Image("Bill Minimal Logo")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                Text("Welcome to Pay The Bill!")
+                    .padding()
+                    .foregroundColor(.white)
                 
-                VStack {
-                    
-                    Spacer()
-                    Image("Bill Minimal Logo")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                    Text("Welcome to Pay The Bill!")
-                        .padding()
-                        .foregroundColor(.white)
-                    
-                    NavigationLink(destination: LoginView(), isActive: $goToLoginView) {
-                        Button {
-                            goToLoginView = true
-                            login()
-                        } label : {
-                            Text("Login")
-                            Image(systemName: "arrow.forward")
-                        }
-                        .buttonStyle(.bordered)
-                        .padding()
-                        .foregroundColor(Color("InteractionPink"))
+                NavigationLink(destination: LoginView(), isActive: $goToLoginView) {
+                    Button {
+                        goToLoginView = true
+                        login()
+                    } label : {
+                        Text("Login")
+                            .frame(width: 60)
+                        Image(systemName: "arrow.forward")
                     }
-                    
-                    Spacer()
+                    .frame(minWidth: 120)
+                    .buttonStyle(.bordered)
+                    .foregroundColor(Color("InteractionPink"))
                     
                 }
+                
+                NavigationLink(destination: SignUpView(), isActive: $goToSignupView) {
+                    Button {
+                        goToSignupView = true
+                    } label : {
+                        Text("Sign Up")
+                            .frame(width: 60)
+                        Image(systemName: "person.badge.plus")
+                    }
+                    .frame(minWidth: 120)
+                    .buttonStyle(.bordered)
+                    .padding(.top, 5)
+                    .foregroundColor(Color("InteractionPink"))
+                }
+                
+                Spacer()
+                
             }
-        }
+        }.navigationBarBackButtonHidden(true)
     }
     
     func login() {

@@ -14,6 +14,7 @@
 		1E1D38C2282DB5E800C284FA /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1D38C1282DB5E800C284FA /* SignUpView.swift */; };
 		1E30081B282EF7A30068BE50 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E30081A282EF7A30068BE50 /* UserModel.swift */; };
 		1E30081D282F02A50068BE50 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E30081C282F02A50068BE50 /* UserViewModel.swift */; };
+		1E5DCC5F28309BE9002964ED /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5DCC5E28309BE9002964ED /* RouteView.swift */; };
 		1EEB582C2821DAC2000E713E /* PayTheBillApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582B2821DAC2000E713E /* PayTheBillApp.swift */; };
 		1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582D2821DAC2000E713E /* ContentView.swift */; };
 		1EEB58302821DAC3000E713E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEB582F2821DAC3000E713E /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		1E1D38C1282DB5E800C284FA /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1E30081A282EF7A30068BE50 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		1E30081C282F02A50068BE50 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		1E5DCC5E28309BE9002964ED /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		1EEB58282821DAC2000E713E /* PayTheBill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayTheBill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EEB582B2821DAC2000E713E /* PayTheBillApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayTheBillApp.swift; sourceTree = "<group>"; };
 		1EEB582D2821DAC2000E713E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				BC848AFA2824B03F00CC9983 /* AddNewBillView.swift */,
 				1E1D38BF282D8AF100C284FA /* LoginView.swift */,
 				1E1D38C1282DB5E800C284FA /* SignUpView.swift */,
+				1E5DCC5E28309BE9002964ED /* RouteView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E5DCC5F28309BE9002964ED /* RouteView.swift in Sources */,
 				BCEDFAAC282B46D000169088 /* AppDelegate.swift in Sources */,
 				1E1D38C0282D8AF100C284FA /* LoginView.swift in Sources */,
 				BC848AFB2824B03F00CC9983 /* AddNewBillView.swift in Sources */,

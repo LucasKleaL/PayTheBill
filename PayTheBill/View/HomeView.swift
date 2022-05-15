@@ -12,6 +12,9 @@ struct HomeView: View {
     
     @ObservedObject var userViewModel = UserViewModel()
     @State var goToAddDashboard = false;
+    @State var goToContentView = false;
+    @State var currentUserName = "";
+    @State var currentUserBills = [];
     let db = Firestore.firestore();
     
     var body: some View {
@@ -26,19 +29,38 @@ struct HomeView: View {
                     Spacer()
                     
                     VStack {
-                        ForEach(userViewModel.user) { user in
-                            Text("Hello "+user.userName!)
+                        HStack {
+                            Text("Hello "+currentUserName)
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .padding(.all)
                                 .frame(width: 300.0)
                                 .foregroundColor(.white)
+                            NavigationLink (destination: ContentView(), isActive: $goToContentView) {
+                                Button {
+                                    userViewModel.signOut() { result in
+                                        if (result == "") {
+                                            goToContentView = true
+                                        }
+                                    }
+                                } label: {
+                                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                                        .foregroundColor(.white)
+                                }
+                            }
                         }
                     }
                     .onAppear() {
-                        self.userViewModel.fetchUser()
+                        self.userViewModel.fetchUser() { user in
+                            self.currentUserName = user.userName!;
+                            print("appear "+user.userName!)
+                        }
                     }
-                        
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Color("InteractionPink"))
+                        .opacity(0.5)
+                        .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), height: 100)
                     Spacer()
                     
                     // footer component
@@ -100,6 +122,11 @@ struct HomeView: View {
             .onAppear {
                 //
             }
+    }
+    
+    func calculatePercentage(value: CGFloat, percentVal: CGFloat) -> CGFloat {
+        let val = value * percentVal;
+        return CGFloat(val / 100.0)
     }
     
 }

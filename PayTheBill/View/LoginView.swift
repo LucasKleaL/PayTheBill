@@ -42,6 +42,7 @@ struct LoginView: View {
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         TextField("", text: $email)
+                            .textInputAutocapitalization(.never)
                     }
                     .frame(width: 280, height: 40)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
@@ -64,6 +65,7 @@ struct LoginView: View {
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         SecureField("", text: $password)
+                            .textInputAutocapitalization(.never)
                     }
                     .frame(width: 280, height: 40)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))

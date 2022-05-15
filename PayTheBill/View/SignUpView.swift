@@ -11,7 +11,8 @@ import CommonCrypto
 
 struct SignUpView: View {
     
-    var signInProcessing = true
+    @ObservedObject var userViewModel = UserViewModel()
+    //var signInProcessing = true
     @State var goToHomeView = false
     @State var goToLoginView = false
     @State var name = ""
@@ -66,6 +67,7 @@ struct SignUpView: View {
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         TextField("", text: $email)
+                            .textInputAutocapitalization(.never)
                     }
                     .frame(width: 280, height: 40)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
@@ -88,6 +90,7 @@ struct SignUpView: View {
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         SecureField("", text: $password)
+                            .textInputAutocapitalization(.never)
                     }
                     .frame(width: 280, height: 40)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
@@ -106,6 +109,7 @@ struct SignUpView: View {
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         SecureField("", text: $retryPassword)
+                            .textInputAutocapitalization(.never)
                     }
                     .frame(width: 280, height: 40)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
@@ -118,7 +122,18 @@ struct SignUpView: View {
                 // Sign Up Button
                 NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
                     Button {
-                        signUp()
+                        userViewModel.signUp(email: email, name: name, password: password, retryPassword: retryPassword) { result in
+                            print("result \(result)")
+                            if (result == "") {
+                                goToHomeView = true;
+                            }
+                            else {
+                                alertContent = result;
+                                showAlert.toggle();
+                            }
+
+                        }
+                                                
                     }
                     label : {
                         Text("Sign Up")
@@ -159,60 +174,6 @@ struct SignUpView: View {
             }
         }
         
-    }
-    
-    func signUp() {
-        let hashPassword = HashSha256(password)
-        print("hashPassword \(hashPassword!)")
-        
-        if (password == retryPassword) {
-            Auth.auth().createUser(withEmail: email, password: hashPassword!) { (result, error) in
-                if error != nil {
-                    print(error?.localizedDescription ?? "SignUp Error")
-                    alertContent = error?.localizedDescription ?? ""
-                    showAlert.toggle()
-                }
-                else {
-                    print("success signup")
-                    print(Auth.auth().currentUser!.uid)
-                    createUserFirestore(userUid: Auth.auth().currentUser!.uid)
-                    goToHomeView = true
-                }
-            }
-        }
-        else {
-            alertContent = "Passwords do not match"
-            showAlert.toggle()
-        }
-    }
-    
-    func HashSha256(_ string: String) -> String? {
-        let length = Int(CC_SHA256_DIGEST_LENGTH)
-        var digest = [UInt8](repeating: 0, count: length)
-
-        if let d = string.data(using: String.Encoding.utf8) {
-            _ = d.withUnsafeBytes { (body: UnsafePointer<UInt8>) in
-                CC_SHA256(body, CC_LONG(d.count), &digest)
-            }
-        }
-
-        return (0..<length).reduce("") {
-            $0 + String(format: "%02x", digest[$1])
-        }
-    }
-
-    func createUserFirestore(userUid: String) {
-        let db = Firestore.firestore();
-        let docRef = db.collection("Users").document(userUid);
-        
-        docRef.setData(["name": name]) {error in
-            if let error = error {
-                print("Error writing document: \(error)")
-            }
-            else {
-                print("Document successfully written!")
-            }
-        }
     }
     
 }
