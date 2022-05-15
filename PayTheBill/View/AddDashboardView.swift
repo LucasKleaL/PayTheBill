@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct AddDashboardView: View {
     
     @State var goToHomeView = false
     @State var goToAddNewBillView = false
+    @State var currentDisplayName = "";
     
     var body: some View {
         
@@ -26,14 +28,17 @@ struct AddDashboardView: View {
                     
                     // welcome text VStack
                     VStack {
-                        Text("Bem vindo {nome}...")
+                        Text("What's up \(currentDisplayName)")
                             .font(.title)
                             .fontWeight(.bold)
-                            .padding(.all)
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                             .frame(width: 300.0)
                             .foregroundColor(.white)
-                        Text("Selecione a categoria de conta que você deseja adicionar")
-                            .multilineTextAlignment(.leading)
+                            .onAppear() {
+                                currentDisplayName = Auth.auth().currentUser!.displayName ?? "";
+                            }
+                        Text("What is the Bill?")
+                            //.multilineTextAlignment(.leading)
                             .padding(.all)
                             .frame(width: 300.0)
                             .foregroundColor(.white)
@@ -42,15 +47,15 @@ struct AddDashboardView: View {
                     // first button cards stack
                     HStack {
                         
-                        NavigationLink(destination: AddNewBillView(), isActive: $goToAddNewBillView) {
+                        NavigationLink(destination: AddNewBillView(billCategory: "Personal"), isActive: $goToAddNewBillView) {
                             Button {
-                                goToAddNewBillView = true
+                                goToAddNewBillView = true;
                             } label: {
                                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                                     .foregroundColor(Color("CardDarkPurple"))
                                     .opacity(0.9)
                                     .frame(width: 130, height: 130)
-                                    .padding(.horizontal)
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                                     .overlay(
                                         VStack {
                                             Image(systemName: "person")
@@ -69,81 +74,90 @@ struct AddDashboardView: View {
                             }
                         }
                         
-                        Button {
-                            // action
-                        } label: {
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(Color("CardDarkPurple"))
-                                .opacity(0.9)
-                                .frame(width: 130, height: 130)
-                                .overlay(
-                                    VStack {
-                                        Image(systemName: "house")
-                                            .resizable()
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .frame(width: 30, height: 30)
-                                            
-                                        Text("Home bill")
-                                            .font(.caption)
-                                            .fontWeight(.medium)
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .multilineTextAlignment(.center)
-                                            .lineLimit(2)
-                                            
-                                    })
+                        NavigationLink(destination: AddNewBillView(billCategory: "House"), isActive: $goToAddNewBillView) {
+                            Button {
+                                goToAddNewBillView = true;
+                            } label: {
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(Color("CardDarkPurple"))
+                                    .opacity(0.9)
+                                    .frame(width: 130, height: 130)
+                                    .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 0))
+                                    .overlay(
+                                        VStack {
+                                            Image(systemName: "house")
+                                                .resizable()
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .frame(width: 30, height: 30)
+                                                
+                                            Text("Home bill")
+                                                .font(.caption)
+                                                .fontWeight(.medium)
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .multilineTextAlignment(.center)
+                                                .lineLimit(2)
+                                                
+                                        })
+                            }
                         }
                         
                     }
                     
                     // second button cards stack
                     HStack {
-                        Button {
-                            //action
-                        } label : {
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(Color("CardDarkPurple"))
-                                .opacity(0.9)
-                                .frame(width: 130, height: 130)
-                                .padding(.horizontal)
-                                .overlay(
-                                    VStack {
-                                        Image(systemName: "cart")
-                                            .resizable()
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .frame(width: 30, height: 30)
-                                            
-                                        Text("Purchase bill")
-                                            .font(.caption)
-                                            .fontWeight(.medium)
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .multilineTextAlignment(.center)
-                                            .lineLimit(2)
-                                            
-                                    })
+                        
+                        NavigationLink(destination: AddNewBillView(billCategory: "Purshase"), isActive: $goToAddNewBillView) {
+                            Button {
+                                goToAddNewBillView = true;
+                            } label : {
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(Color("CardDarkPurple"))
+                                    .opacity(0.9)
+                                    .frame(width: 130, height: 130)
+                                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                    .overlay(
+                                        VStack {
+                                            Image(systemName: "cart")
+                                                .resizable()
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .frame(width: 30, height: 30)
+                                                
+                                            Text("Purchase bill")
+                                                .font(.caption)
+                                                .fontWeight(.medium)
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .multilineTextAlignment(.center)
+                                                .lineLimit(2)
+                                                
+                                        })
+                            }
                         }
                         
-                        Button {
-                            // action
-                        } label: {
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(Color("CardDarkPurple"))
-                                .opacity(0.9)
-                                .frame(width: 130, height: 130)
-                                .overlay(
-                                    VStack {
-                                        Image(systemName: "briefcase")
-                                            .resizable()
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .frame(width: 30, height: 30)
-                                            
-                                        Text("Work bill")
-                                            .font(.caption)
-                                            .fontWeight(.medium)
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .multilineTextAlignment(.center)
-                                            .lineLimit(2)
-                                            
-                                    })
+                        NavigationLink(destination: AddNewBillView(billCategory: "Work"), isActive: $goToAddNewBillView) {
+                            Button {
+                                goToAddNewBillView = true;
+                            } label: {
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(Color("CardDarkPurple"))
+                                    .opacity(0.9)
+                                    .frame(width: 130, height: 130)
+                                    .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 0))
+                                    .overlay(
+                                        VStack {
+                                            Image(systemName: "briefcase")
+                                                .resizable()
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .frame(width: 30, height: 30)
+                                                
+                                            Text("Work bill")
+                                                .font(.caption)
+                                                .fontWeight(.medium)
+                                                .foregroundColor(Color("InteractionPink"))
+                                                .multilineTextAlignment(.center)
+                                                .lineLimit(2)
+                                                
+                                        })
+                            }
                         }
                         
                     }

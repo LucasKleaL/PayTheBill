@@ -89,9 +89,16 @@ class UserViewModel: ObservableObject {
         }
     }
 
-    func createUserFirestore(userUid: String, name: String) { //closure instead of return
+    func createUserFirestore(userUid: String, name: String) {
         let db = Firestore.firestore();
         let docRef = db.collection("Users").document(userUid);
+        
+        //Adding the display name to the created user
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = name
+        changeRequest?.commitChanges { error in
+            print("Error commiting the user displayName \(String(describing: error))")
+        }
         
         docRef.setData(["name": name, "bills": [""]]) {error in
             if let error = error {
