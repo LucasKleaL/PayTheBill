@@ -130,6 +130,21 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    func getAuthSession(completion: @escaping(String) -> Void) {
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if user != nil {
+                print("User session signed in");
+                completion("");
+                // User is signed in.
+            }
+            else {
+                print("No user session signed in");
+                completion("No user session signed in");
+                // No user is signed in.
+            }
+        }
+    }
+    
     
     
 }

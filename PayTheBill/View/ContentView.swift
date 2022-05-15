@@ -10,6 +10,7 @@ import Firebase
 
 struct ContentView: View {
     
+    @ObservedObject var userViewModel = UserViewModel()
     @State var goToHomeView = false
     @State var goToLoginView = false
     @State var goToSignupView = false
@@ -63,7 +64,18 @@ struct ContentView: View {
                 
                 Spacer()
                 
+                NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
+                    
+                }
+                
+            }.onAppear() {
+                userViewModel.getAuthSession() { result in
+                    if (result == "") {
+                        goToHomeView = true
+                    }
+                }
             }
+            
         }.navigationBarBackButtonHidden(true)
     }
     
