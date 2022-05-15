@@ -19,6 +19,8 @@
 		1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB582D2821DAC2000E713E /* ContentView.swift */; };
 		1EEB58302821DAC3000E713E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEB582F2821DAC3000E713E /* Assets.xcassets */; };
 		1EEB58332821DAC3000E713E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEB58322821DAC3000E713E /* Preview Assets.xcassets */; };
+		1EF4A885283142D2004D2CE1 /* BillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF4A884283142D2004D2CE1 /* BillModel.swift */; };
+		1EF4A8872831470F004D2CE1 /* BillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF4A8862831470F004D2CE1 /* BillViewModel.swift */; };
 		BC09AC652824809D000C5246 /* AddDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09AC642824809D000C5246 /* AddDashboardView.swift */; };
 		BC09AC67282482B1000C5246 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC09AC66282482B1000C5246 /* HomeView.swift */; };
 		BC848AFB2824B03F00CC9983 /* AddNewBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC848AFA2824B03F00CC9983 /* AddNewBillView.swift */; };
@@ -37,6 +39,8 @@
 		1EEB582D2821DAC2000E713E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1EEB582F2821DAC3000E713E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1EEB58322821DAC3000E713E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1EF4A884283142D2004D2CE1 /* BillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillModel.swift; sourceTree = "<group>"; };
+		1EF4A8862831470F004D2CE1 /* BillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillViewModel.swift; sourceTree = "<group>"; };
 		BC09AC642824809D000C5246 /* AddDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDashboardView.swift; sourceTree = "<group>"; };
 		BC09AC66282482B1000C5246 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BC848AFA2824B03F00CC9983 /* AddNewBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewBillView.swift; sourceTree = "<group>"; };
@@ -74,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				1E30081A282EF7A30068BE50 /* UserModel.swift */,
+				1EF4A884283142D2004D2CE1 /* BillModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -82,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				1E30081C282F02A50068BE50 /* UserViewModel.swift */,
+				1EF4A8862831470F004D2CE1 /* BillViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -206,6 +212,7 @@
 				1E5DCC5F28309BE9002964ED /* RouteView.swift in Sources */,
 				BCEDFAAC282B46D000169088 /* AppDelegate.swift in Sources */,
 				1E1D38C0282D8AF100C284FA /* LoginView.swift in Sources */,
+				1EF4A8872831470F004D2CE1 /* BillViewModel.swift in Sources */,
 				BC848AFB2824B03F00CC9983 /* AddNewBillView.swift in Sources */,
 				1E30081D282F02A50068BE50 /* UserViewModel.swift in Sources */,
 				1EEB582E2821DAC2000E713E /* ContentView.swift in Sources */,
@@ -213,6 +220,7 @@
 				BC09AC67282482B1000C5246 /* HomeView.swift in Sources */,
 				BC09AC652824809D000C5246 /* AddDashboardView.swift in Sources */,
 				1E30081B282EF7A30068BE50 /* UserModel.swift in Sources */,
+				1EF4A885283142D2004D2CE1 /* BillModel.swift in Sources */,
 				1EEB582C2821DAC2000E713E /* PayTheBillApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
