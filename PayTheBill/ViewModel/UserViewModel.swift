@@ -49,23 +49,28 @@ class UserViewModel: ObservableObject {
         let hashPassword = HashSha256(password)
         print("hashPassword \(hashPassword!)")
         
-        if (password == retryPassword) {
-            Auth.auth().createUser(withEmail: email, password: hashPassword!) { (result, error) in
-                if error != nil {
-                    print("Auth error != nil")
-                    print(error?.localizedDescription ?? "SignUp Error")
-                    completion(error?.localizedDescription as? String ?? "SignUpError");
+        if (password.count >= 4) { //Password min lenght verification
+            if (password == retryPassword) { //Password match verification
+                Auth.auth().createUser(withEmail: email, password: hashPassword!) { (result, error) in
+                    if error != nil {
+                        print("Auth error != nil")
+                        print(error?.localizedDescription ?? "SignUp Error")
+                        completion(error?.localizedDescription as? String ?? "SignUpError");
+                    }
+                    else {
+                        print("success signup")
+                        print(Auth.auth().currentUser!.uid)
+                        self.createUserFirestore(userUid: Auth.auth().currentUser!.uid, name: name)
+                        completion("")
+                    }
                 }
-                else {
-                    print("success signup")
-                    print(Auth.auth().currentUser!.uid)
-                    self.createUserFirestore(userUid: Auth.auth().currentUser!.uid, name: name)
-                    completion("")
-                }
+            }
+            else {
+                completion("Passwords do not match");
             }
         }
         else {
-            completion("Passwords do not match");
+            completion("Password must have a minimum of 4 characters")
         }
     }
     
@@ -96,6 +101,20 @@ class UserViewModel: ObservableObject {
             else {
                 print("Document successfully written!")
                 //completation(true);
+            }
+        }
+    }
+    
+    func login(email: String, password: String, completion: @escaping(String) -> Void) {
+        let hashPassword = HashSha256(password)
+        Auth.auth().signIn(withEmail: email, password: hashPassword!) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "Login Error")
+                completion(error?.localizedDescription ?? "Login Error")
+            }
+            else {
+                print("Successful login")
+                completion("")
             }
         }
     }

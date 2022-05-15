@@ -12,7 +12,6 @@ import CommonCrypto
 struct SignUpView: View {
     
     @ObservedObject var userViewModel = UserViewModel()
-    //var signInProcessing = true
     @State var goToHomeView = false
     @State var goToLoginView = false
     @State var name = ""
@@ -119,7 +118,7 @@ struct SignUpView: View {
                     
                 }
                 
-                // Sign Up Button
+                //Sign Up Button
                 NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
                     Button {
                         userViewModel.signUp(email: email, name: name, password: password, retryPassword: retryPassword) { result in

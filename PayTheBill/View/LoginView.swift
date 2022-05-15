@@ -11,7 +11,7 @@ import CommonCrypto
 
 struct LoginView: View {
     
-    var signInProcessing = true
+    @ObservedObject var userViewModel = UserViewModel()
     @State var goToHomeView = false
     @State var goToSignUpView = false
     @State var email = ""
@@ -78,7 +78,15 @@ struct LoginView: View {
                 // Login Button
                 NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
                     Button {
-                        login()
+                        userViewModel.login(email: email, password: password) { result in 
+                            if (result == "") {
+                                goToHomeView = true;
+                            }
+                            else {
+                                alertContent = result;
+                                showAlert.toggle();
+                            }
+                        }
                     }
                     label : {
                         Text("Log In")
@@ -87,7 +95,6 @@ struct LoginView: View {
                     .buttonStyle(.bordered)
                     .padding()
                     .foregroundColor(Color("InteractionPink"))
-                    
                     .alert(isPresented: $showAlert) {
                         Alert(
                             title: Text("Login Error"),
@@ -121,35 +128,7 @@ struct LoginView: View {
         
     }
     
-    func login() {
-        let hashPassword = HashSha256(password)
-        Auth.auth().signIn(withEmail: email, password: hashPassword!) { (result, error) in
-            if error != nil {
-                print(error?.localizedDescription ?? "Login Error")
-                alertContent = error?.localizedDescription ?? ""
-                showAlert.toggle()
-            }
-            else {
-                print("success login")
-                goToHomeView = true
-            }
-        }
-    }
     
-    func HashSha256(_ string: String) -> String? {
-            let length = Int(CC_SHA256_DIGEST_LENGTH)
-            var digest = [UInt8](repeating: 0, count: length)
-
-            if let d = string.data(using: String.Encoding.utf8) {
-                _ = d.withUnsafeBytes { (body: UnsafePointer<UInt8>) in
-                    CC_SHA256(body, CC_LONG(d.count), &digest)
-                }
-            }
-
-            return (0..<length).reduce("") {
-                $0 + String(format: "%02x", digest[$1])
-            }
-        }
     
 }
 
