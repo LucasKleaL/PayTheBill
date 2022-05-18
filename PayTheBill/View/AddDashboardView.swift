@@ -165,63 +165,10 @@ struct AddDashboardView: View {
                     Spacer()
                     
                     // footer component
-                    RoundedRectangle(cornerRadius: 0, style: .continuous)
-                        .foregroundColor(Color("FooterGray"))
-                        .opacity(0.8)
-                        .frame(width: UIScreen.main.bounds.width, height: 50)
-                        .overlay(
-                            HStack {
-                                
-                                NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
-                                    Button {
-                                        goToHomeView = true
-                                    } label: {
-                                        Image(systemName: "house")
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .foregroundColor(Color("DisabledPurple"))
-                                    }
-                                    .padding(.horizontal, 20.0)
-                                }
-                                
-                                Button {
-                                    //action
-                                } label: {
-                                    Image(systemName: "plus.app.fill")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundColor(Color("InteractionPink"))
-                                }
-                                .padding(.horizontal, 20.0)
-                                
-                                
-                                Button {
-                                    //action
-                                } label: {
-                                    Image(systemName: "chart.bar")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundColor(Color("DisabledPurple"))
-                                }
-                                .padding(.horizontal, 20.0)
-                                
-                                Button {
-                                    //action
-                                } label: {
-                                    Image(systemName: "list.dash")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundColor(Color("DisabledPurple"))
-                                }
-                                .padding(.horizontal, 20.0)
-                                
-                            }
-                        )
+                    FooterView(currentPage: "add")
                     
                 }
-                /*NavigationLink(destination: HomeView(), isActive: $goToHomeView) {
-                    
-                }*/
+
             }.edgesIgnoringSafeArea(.all)
             .navigationBarBackButtonHidden(true)
             .navigationViewStyle(.stack)
