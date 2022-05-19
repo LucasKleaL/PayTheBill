@@ -20,7 +20,8 @@ class UserViewModel: ObservableObject {
             .getDocument { (document, error) in
                 let userUid = document!.documentID;
                 let userName = document!.data()!["name"] as? String ?? "";
-                self.user = UserModel(id: .init(), userUid: userUid, userName: userName)
+                let userBills = document!.data()!["bills"] as? Array<String> ?? [""];
+                self.user = UserModel(id: .init(), userUid: userUid, userName: userName, userBills: userBills);
                 completion(self.user);
             }
     }

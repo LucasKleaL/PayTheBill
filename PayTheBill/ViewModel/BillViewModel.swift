@@ -10,6 +10,8 @@ import Firebase
 import FirebaseFirestore
 
 class BillViewModel: ObservableObject {
+    
+    var userViewModel = UserViewModel()
     @Published var bill = BillModel();
     @Published var bills = [BillModel()];
     private var db = Firestore.firestore();
@@ -45,11 +47,41 @@ class BillViewModel: ObservableObject {
             }
             else {
                 print("AddBill document successfully written!")
+                self.sendBillToUser(userUid: userUid, billUid: docRef.documentID) { result in
+                    
+                }
                 completion("Bill successfully added.")
             }
         }
     }
     
-    
+    func sendBillToUser(userUid: String, billUid: String, completion: @escaping(String) -> Void) {
+        let docRef = db.collection("Users").document(userUid);
+        var userBills = [""];
+        
+        //Getting user data
+        userViewModel.fetchUser() { user in
+            userBills = user.userBills!
+            //If the first position is a null string, removes the value from bill's array
+            if (userBills.count != 0 && userBills[0] == "") {
+                print("removing the position 0 of bills")
+                userBills.remove(at: 0)
+            }
+            userBills.append(billUid);
+            
+            //Adding the bill into user document
+            docRef.updateData(["bills": userBills]) {error in
+                if let error = error {
+                    print("Error writing bill to user document: \(error)")
+                    completion("Error writing bill to user document: \(error)");
+                }
+                else {
+                    print("Send Bill To User Document successfully written!")
+                    completion("");
+                }
+            }
+        }
+        
+    }
     
 }
