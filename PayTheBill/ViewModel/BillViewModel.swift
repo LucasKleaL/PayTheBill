@@ -84,4 +84,44 @@ class BillViewModel: ObservableObject {
         
     }
     
+    func fetchBills(completion: @escaping([BillModel]) -> Void) {
+        db.collection("Bills").addSnapshotListener{ querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("No Users documents")
+                return
+            }
+            
+            self.bills = documents.map { queryDocumentSnapshot -> BillModel in
+                let data = queryDocumentSnapshot.data();
+                let userUid = data["userUid"] as? String ?? "";
+                let billOwner = data["billOwner"] as? String ?? "";
+                let billCategory = data["billCategory"] as? String ?? "";
+                let title = data["title"] as? String ?? "";
+                let desc = data["desc"] as? String ?? "";
+                let value = data["value"] as? Float ?? 0.0;
+                let payedValue = data["payedValue"] as? Float ?? 0.0;
+                let parcels = data["parcels"] as? Int ?? 0;
+                let creationDate = data["creationDate"] as? String ?? "";
+                let finishDate = data["finishDate"] as? String ?? "";
+                
+                print("fetchBills")
+                return(BillModel(
+                    id: .init(),
+                    userUid: userUid,
+                    billOwner: billOwner,
+                    billCategory: billCategory,
+                    title: title,
+                    desc: desc,
+                    value: value,
+                    payedValue: payedValue,
+                    parcels: parcels,
+                    creationDate: creationDate,
+                    finishDate: finishDate
+                ));
+                
+            }
+            completion(self.bills)
+        }
+    }
+    
 }

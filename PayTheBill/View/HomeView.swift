@@ -10,7 +10,9 @@ import Firebase
 
 struct HomeView: View {
     
-    @ObservedObject var userViewModel = UserViewModel()
+    @ObservedObject var userViewModel = UserViewModel();
+    @ObservedObject var billViewModel = BillViewModel();
+    @State var bills = [BillModel()];
     @State var goToAddDashboard = false;
     @State var goToContentView = false;
     @State var currentUserName = "";
@@ -61,6 +63,35 @@ struct HomeView: View {
                         .foregroundColor(Color("InteractionPink"))
                         .opacity(0.5)
                         .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), height: 100)
+                        .onAppear() {
+                            billViewModel.fetchBills() { result in
+                                self.bills = result;
+                                print("bill fetch \(self.bills)")
+                            }
+                            
+                        }
+                    
+                    VStack {
+                        ForEach(0..<self.bills.count) { index in
+                            Text("\(self.bills.count)")
+                                .foregroundColor(.white)
+                            Text(self.bills[index].billOwner as? String ?? "")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding(.all)
+                                .frame(width: 300.0)
+                                .foregroundColor(.white)
+
+                                Text(self.bills[index].billOwner as? String ?? "")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .padding(.all)
+                                    .frame(width: 300.0)
+                                    .foregroundColor(.white)
+                        }
+
+                    }
+                    
                     Spacer()
                     
                     // footer component
