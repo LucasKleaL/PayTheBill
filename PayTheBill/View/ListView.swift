@@ -13,6 +13,8 @@ struct ListView: View {
     @ObservedObject var billViewModel = BillViewModel();
     @State var currentDisplayName = "";
     @State var billTitleIcon = "person";
+    @State var goToBillView = false;
+    @State var isFirstView = true;
     
     var body: some View {
         ZStack {
@@ -22,99 +24,115 @@ struct ListView: View {
             VStack {
                 
                 Spacer()
+                    .frame(height: 60)
                 
-                ForEach(billViewModel.currentUserBills, id: \.uid) { bill in
+                ScrollView {
                     
-                    if (bill.userUid == Auth.auth().currentUser!.uid) {
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(Color("InteractionPink"))
-                            .opacity(0.2)
-                            .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), height: 200)
-                            .overlay (
-                                VStack {
-                                    
-                                    HStack {
-                                        
-                                        Text(bill.title ?? "")
-                                            .font(.title2)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.white)
-                                            .multilineTextAlignment(.leading)
-                                        
-                                        Image(systemName: "person")
-                                            
-                                        /*
-                                            .onAppear() {
-                                                self.setBillCategoryIcon(category: bill.billCategory ?? "");
-                                                /*
-                                                if (bill.billCategory == "Personal") {
-                                                    self.billTitleIcon = "person";
+                    VStack {
+                        
+                        Spacer()
+                        
+                        if (self.isFirstView) {
+                            ForEach(billViewModel.currentUserBills, id: \.uid) { bill in
+                                
+                                if (bill.userUid == Auth.auth().currentUser!.uid) {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundColor(Color("InteractionPink"))
+                                        .opacity(0.2)
+                                        .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), height: 200)
+                                        .overlay (
+                                            VStack {
+                                                
+                                                HStack {
+                                                    
+                                                    Text(bill.title ?? "")
+                                                        .font(.title2)
+                                                        .fontWeight(.bold)
+                                                        .foregroundColor(.white)
+                                                        .multilineTextAlignment(.leading)
+                                                    
+                                                    Image(systemName: "person")
+                                                        
+                                                    /*
+                                                        .onAppear() {
+                                                            self.setBillCategoryIcon(category: bill.billCategory ?? "");
+                                                            /*
+                                                            if (bill.billCategory == "Personal") {
+                                                                self.billTitleIcon = "person";
+                                                            }
+                                                            else if (bill.billCategory == "Home") {
+                                                                self.billTitleIcon = "house";
+                                                            }
+                                                            else if (bill.billCategory == "Purchase") {
+                                                                self.billTitleIcon = "cart";
+                                                            }
+                                                            else if (bill.billCategory == "Work") {
+                                                                self.billTitleIcon = "briefCase";
+                                                            }
+                                                            else {
+                                                                print("No category found")
+                                                            }
+                                                            */
+                                                        }
+                                                     */
+                                                        
+                                                        .resizable()
+                                                        .foregroundColor(Color("InteractionPink"))
+                                                        .frame(width: 18, height: 18)
+                                                    
                                                 }
-                                                else if (bill.billCategory == "Home") {
-                                                    self.billTitleIcon = "house";
+                                                .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
+                                                .padding(EdgeInsets(top: 5, leading: 30, bottom: 0, trailing: 0))
+                                                
+                                                Text(bill.desc ?? "")
+                                                    .font(.system(size: 15))
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(.white)
+                                                    .multilineTextAlignment(.leading)
+                                                    .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
+                                                    .padding(EdgeInsets(top: 1, leading: 30, bottom: 0, trailing: 0))
+                                                
+                                                Text("From \(currentDisplayName) to \(bill.billOwner ?? ""), \(bill.creationDate ?? "")")
+                                                    .font(.system(size: 15))
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(.white)
+                                                    .multilineTextAlignment(.leading)
+                                                    .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
+                                                    .padding(EdgeInsets(top: 1, leading: 30, bottom: 0, trailing: 0))
+                                                
+                                                let billValue = String(format: "%.1f", bill.value!);
+                                                let payedValue = String(format: "%.1f", bill.payedValue!);
+                                                
+                                                Text("Value \(billValue), Payed: \(payedValue)")
+                                                    .font(.system(size: 15))
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(.white)
+                                                    .multilineTextAlignment(.leading)
+                                                    .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
+                                                    .padding(EdgeInsets(top: 1, leading: 30, bottom: 5, trailing: 0))
+                                                
+                                                NavigationLink(destination: BillView(uid: bill.uid ?? "", userName: self.currentDisplayName, bill: bill), isActive: ($goToBillView)) {
+                                                    Button {
+                                                        goToBillView = true;
+                                                    } label : {
+                                                        Text("Pay Bill")
+                                                        Image(systemName: "dollarsign.circle")
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                                                    .foregroundColor(Color("InteractionPink"))
+                                                    
                                                 }
-                                                else if (bill.billCategory == "Purchase") {
-                                                    self.billTitleIcon = "cart";
-                                                }
-                                                else if (bill.billCategory == "Work") {
-                                                    self.billTitleIcon = "briefCase";
-                                                }
-                                                else {
-                                                    print("No category found")
-                                                }
-                                                */
+                                                
                                             }
-                                         */
-                                            
-                                            .resizable()
-                                            .foregroundColor(Color("InteractionPink"))
-                                            .frame(width: 18, height: 18)
-                                        
-                                    }
-                                    .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
-                                    .padding(EdgeInsets(top: 5, leading: 30, bottom: 0, trailing: 0))
-                                    
-                                    Text(bill.desc ?? "")
-                                        .font(.system(size: 15))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.leading)
-                                        .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
-                                        .padding(EdgeInsets(top: 1, leading: 30, bottom: 0, trailing: 0))
-                                    
-                                    Text("From \(currentDisplayName) to \(bill.billOwner ?? ""), \(bill.creationDate ?? "")")
-                                        .font(.system(size: 15))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.leading)
-                                        .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
-                                        .padding(EdgeInsets(top: 1, leading: 30, bottom: 0, trailing: 0))
-                                    
-                                    let billValue = String(format: "%.1f", bill.value!);
-                                    let payedValue = String(format: "%.1f", bill.payedValue!);
-                                    
-                                    Text("Value \(billValue), Payed: \(payedValue)")
-                                        .font(.system(size: 15))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.leading)
-                                        .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), alignment: .leading)
-                                        .padding(EdgeInsets(top: 1, leading: 30, bottom: 5, trailing: 0))
-                                    
-                                    Button {
-                                        
-                                    } label : {
-                                        Text("Pay Bill")
-                                        Image(systemName: "dollarsign.circle")
-                                    }
-                                    .buttonStyle(.bordered)
-                                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-                                    .foregroundColor(Color("InteractionPink"))
-                                    
+                                        )
                                 }
-                            )
+                                
+                            }
+                            
+                        }
                     }
-                    
+                                        
                 }
                 
                 Spacer()
@@ -123,10 +141,9 @@ struct ListView: View {
                 
             }
             
-            
-            
         }.edgesIgnoringSafeArea(.all)
         .navigationBarBackButtonHidden(true)
+        .navigationViewStyle(.stack)
         .onAppear {
             currentDisplayName = Auth.auth().currentUser!.displayName ?? "";
             billViewModel.fetchBills() { result in }

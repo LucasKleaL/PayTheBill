@@ -85,6 +85,33 @@ class BillViewModel: ObservableObject {
         
     }
     
+    func fetchBill(uid: String, completion: @escaping(BillModel) -> Void) {
+        db.collection("Users").document(uid)
+            .getDocument { (document, error) in
+                //let data = document!.data();
+                let uid = document!.documentID;
+                let userUid = document!.data()!["userUid"] as? String ?? "";
+                let billOwner = document!.data()!["billOwner"] as? String ?? "";
+                let billCategory = document!.data()!["billCategory"] as? String ?? "";
+                let title = document!.data()!["title"] as? String ?? "";
+                let desc = document!.data()!["desc"] as? String ?? "";
+                let value = document!.data()!["value"] as? Float ?? 0.0;
+                let payedValue = document!.data()!["payedValue"] as? Float ?? 0.0;
+                let parcels = document!.data()!["parcels"] as? Int ?? 0;
+                let creationDate = document!.data()!["creationDate"] as? String ?? "";
+                let finishDate = document!.data()!["finishDate"] as? String ?? "";
+                
+                print("fetchBill uid \(uid)")
+                self.bill = BillModel(id: .init(), uid: uid, userUid: userUid, billOwner: billOwner, billCategory: billCategory, title: title, desc: desc, value: value, payedValue: payedValue, parcels: parcels, creationDate: creationDate, finishDate: finishDate);
+                completion(self.bill);
+                /*
+                self.user = UserModel(id: .init(), userUid: userUid, userName: userName, userBills: userBills);
+                completion(self.user);
+                */
+            }
+        print("fetchBill \(self.bill)")
+    }
+    
     func fetchBills(completion: @escaping([BillModel]) -> Void) {
         db.collection("Bills").addSnapshotListener{ querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
@@ -133,6 +160,21 @@ class BillViewModel: ObservableObject {
             print("fetchCurrentUser \(document)")
             if (document.userUid == Auth.auth().currentUser!.uid) {
                 self.currentUserBills.append(document);
+            }
+        }
+    }
+    
+    func updateBillPayedValue(uid: String, payedValue: Float, completion: @escaping(String) -> Void) {
+        let docRef = db.collection("Bills").document(uid);
+        
+        docRef.updateData(["payedValue": payedValue]) {error in
+            if let error = error {
+                print("Error updating bill payed value document: \(error)")
+                completion("Error writing bill to user document: \(error)");
+            }
+            else {
+                print("Sucessfully update bill document with payed value.")
+                completion("");
             }
         }
     }
