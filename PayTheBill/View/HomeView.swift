@@ -12,9 +12,9 @@ struct HomeView: View {
     
     @ObservedObject var userViewModel = UserViewModel();
     @ObservedObject var billViewModel = BillViewModel();
-    @State var bills = [BillModel()];
     @State var goToAddDashboard = false;
     @State var goToContentView = false;
+    @State var goToListView = false;
     @State var currentUserName = "";
     @State var currentUserBills = [];
     let db = Firestore.firestore();
@@ -64,33 +64,55 @@ struct HomeView: View {
                         .opacity(0.5)
                         .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 90), height: 100)
                         .onAppear() {
-                            billViewModel.fetchBills() { result in
-                                self.bills = result;
-                                print("bill fetch \(self.bills)")
+                            userViewModel.fetchUser() { user in
+                                currentUserBills = user.userBills ?? [""]
                             }
-                            
+                            billViewModel.fetchBills() { result in }
                         }
-                    
-                    VStack {
-                        ForEach(0..<self.bills.count) { index in
-                            Text("\(self.bills.count)")
-                                .foregroundColor(.white)
-                            Text(self.bills[index].billOwner as? String ?? "")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .padding(.all)
-                                .frame(width: 300.0)
-                                .foregroundColor(.white)
-
-                                Text(self.bills[index].billOwner as? String ?? "")
-                                    .font(.title)
+                        .overlay(
+                            VStack() {
+                                
+                                Spacer()
+                                
+                                Text("You has \(currentUserBills.count ?? [""].count) active bills.")
+                                    .font(.title2)
                                     .fontWeight(.bold)
-                                    .padding(.all)
-                                    .frame(width: 300.0)
                                     .foregroundColor(.white)
+                                
+                                NavigationLink(destination: ListView(), isActive: $goToListView) {
+                                    Button {
+                                        goToListView = true;
+                                    } label: {
+                                        Text("View all bills")
+                                            .underline()
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                
+                                Spacer()
+                            }
+                        )
+                    
+                    /*
+                    VStack {
+                        ForEach(billViewModel.bills, id: \.uid) { bill in
+                            
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(Color("InteractionPink"))
+                                .opacity(0.5)
+                                .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 40), height: 100)
+                                .overlay(
+                                    Text(bill.billOwner ?? "")
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .padding(.all)
+                                        .foregroundColor(.white)
+                                )
+                            
                         }
 
                     }
+                    */
                     
                     Spacer()
                     

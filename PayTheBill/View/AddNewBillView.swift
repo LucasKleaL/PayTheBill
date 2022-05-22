@@ -199,8 +199,8 @@ struct AddNewBillView: View {
                 
                 Spacer()
                     
-                    // footer component
-                    FooterView(currentPage: "add")
+                // footer component
+                FooterView(currentPage: "add")
                 
             }
         }.edgesIgnoringSafeArea(.all)

@@ -95,25 +95,25 @@ struct FooterView: View {
                             }
                         }
 
-                        
-                        Button {
-                            goToListView = true;
-                        } label: {
-                            Image(systemName: "list.dash")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(self.listIconColor)
-                        }
-                        .padding(.horizontal, 20.0)
-                        .onAppear() {
-                            if (currentPage == "list") {
-                                self.listIconColor = Color("InteractionPink");
+                        NavigationLink(destination: ListView(), isActive: $goToListView) {
+                            Button {
+                                goToListView = true;
+                            } label: {
+                                Image(systemName: "list.dash")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(self.listIconColor)
                             }
-                            else {
-                                self.listIconColor = Color("DisabledPurple")
+                            .padding(.horizontal, 20.0)
+                            .onAppear() {
+                                if (currentPage == "list") {
+                                    self.listIconColor = Color("InteractionPink");
+                                }
+                                else {
+                                    self.listIconColor = Color("DisabledPurple")
+                                }
                             }
                         }
-
                         
                     }
                 )

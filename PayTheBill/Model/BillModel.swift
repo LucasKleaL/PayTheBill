@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BillModel: Identifiable, Codable {
     var id: String = UUID().uuidString;
+    var uid: String?;
     var userUid: String?;
     var billOwner: String?;
     var billCategory: String?;

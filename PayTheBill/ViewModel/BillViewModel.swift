@@ -14,6 +14,7 @@ class BillViewModel: ObservableObject {
     var userViewModel = UserViewModel()
     @Published var bill = BillModel();
     @Published var bills = [BillModel()];
+    @Published var currentUserBills = [BillModel()];
     private var db = Firestore.firestore();
     
     func addBill(userUid: String, billOwner: String, billCategory: String, title: String, desc: String, value: Float, parcels: Int, completion: @escaping(String) -> Void) {
@@ -93,6 +94,7 @@ class BillViewModel: ObservableObject {
             
             self.bills = documents.map { queryDocumentSnapshot -> BillModel in
                 let data = queryDocumentSnapshot.data();
+                let uid = queryDocumentSnapshot.documentID;
                 let userUid = data["userUid"] as? String ?? "";
                 let billOwner = data["billOwner"] as? String ?? "";
                 let billCategory = data["billCategory"] as? String ?? "";
@@ -107,6 +109,7 @@ class BillViewModel: ObservableObject {
                 print("fetchBills")
                 return(BillModel(
                     id: .init(),
+                    uid: uid,
                     userUid: userUid,
                     billOwner: billOwner,
                     billCategory: billCategory,
@@ -121,6 +124,16 @@ class BillViewModel: ObservableObject {
                 
             }
             completion(self.bills)
+            self.fetchCurrentUserBills() { result in }
+        }
+    }
+    
+    func fetchCurrentUserBills(completion: @escaping([BillModel]) -> Void) {
+        self.bills.map { document in
+            print("fetchCurrentUser \(document)")
+            if (document.userUid == Auth.auth().currentUser!.uid) {
+                self.currentUserBills.append(document);
+            }
         }
     }
     
