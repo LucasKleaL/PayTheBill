@@ -172,29 +172,43 @@ struct AddNewBillView: View {
                     }
                 }
                 
-                Button {
-                    billViewModel.addBill(userUid: self.userUid, billOwner: self.billOwner, billCategory: self.billCategory!, title: self.title, desc: self.desc, value: self.value, parcels: self.parcels) { result in
-                        print("confirm result "+result);
-                        self.alertContent = result;
-                        self.showAlert.toggle();
-                    }
-                } label : {
-                    Text("Confirm")
-                    //Image(systemName: "plus")
-                }
-                .buttonStyle(.bordered)
-                .padding()
-                .foregroundColor(Color("InteractionPink"))
-                .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("Add New Bill Result"),
-                        message: Text(alertContent),
-                        dismissButton: .default(Text("Ok")) {
-                            if (alertContent == "Bill successfully added.") {
-                                goToAddDashboardView = true;
-                            }
+                HStack {
+                    NavigationLink(destination: AddDashboardView(), isActive: $goToAddDashboardView) {
+                        Button {
+                            goToAddDashboardView = true;
+                        } label : {
+                            Image(systemName: "arrow.left")
+                            Text("Back")
                         }
-                    )
+                            .buttonStyle(.bordered)
+                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                            .foregroundColor(.white)
+                    }
+                    
+                    Button {
+                        billViewModel.addBill(userUid: self.userUid, billOwner: self.billOwner, billCategory: self.billCategory!, title: self.title, desc: self.desc, value: self.value, parcels: self.parcels) { result in
+                            print("confirm result "+result);
+                            self.alertContent = result;
+                            self.showAlert.toggle();
+                        }
+                    } label : {
+                        Text("Confirm")
+                        //Image(systemName: "plus")
+                    }
+                    .buttonStyle(.bordered)
+                    .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 0))
+                    .foregroundColor(Color("InteractionPink"))
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Add New Bill Result"),
+                            message: Text(alertContent),
+                            dismissButton: .default(Text("Ok")) {
+                                if (alertContent == "Bill successfully added.") {
+                                    goToAddDashboardView = true;
+                                }
+                            }
+                        )
+                    }
                 }
                 
                 Spacer()

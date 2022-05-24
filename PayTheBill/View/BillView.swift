@@ -17,6 +17,7 @@ struct BillView: View {
     @State var bill = BillModel();
     @State var sliderValue: Float = 0;
     @State var goToListView = false;
+    @State var checkbox = false;
     
     var body: some View {
         ZStack {
@@ -33,6 +34,17 @@ struct BillView: View {
                         
                         VStack {
                             
+                            Image(systemName: "checkmark.square")
+                                .foregroundColor(checkbox ? Color("InteractionPink") : Color("BackgroundDarkPurple"))
+                                .font(.system(size: 50))
+                                .multilineTextAlignment(.trailing)
+                                .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
+                                .onAppear() {
+                                    if (self.bill.payedValue! == self.bill.value!) {
+                                        self.checkbox = true;
+                                    }
+                                }
+                             
                             Spacer()
                             
                             Text(self.bill.title ?? "")
@@ -55,11 +67,51 @@ struct BillView: View {
                             let payedValue = String(format: "%.2f", self.bill.payedValue!);
                             
                             VStack {
-                                Text(billValue)
-                                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
-                                Slider(value: $sliderValue, in: Float(payedValue)!...Float(billValue)!, step: 0.1)
-                                    .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 60))
-                                Text("\(String(format: "%.2f", sliderValue))")
+                                
+                                HStack {
+                                    Image(systemName: "dollarsign.circle")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 30))
+                                        .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                    Text(billValue)
+                                        .font(.body)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                }
+                                
+                                if (billValue != payedValue) {
+                                    Slider(value: $sliderValue, in: Float(payedValue)!...Float(billValue)!, step: 0.01)
+                                        .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 60))
+                                        .onAppear() {
+                                            sliderValue = Float(payedValue)!;
+                                        }
+                                    HStack {
+                                        Image(systemName: "dollarsign.circle.fill")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 30))
+                                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                        Text("\(String(format: "%.2f", sliderValue))")
+                                            .font(.body)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                    }
+                                }
+                                else {
+                                    HStack {
+                                        Image(systemName: "dollarsign.circle.fill")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 30))
+                                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                        Text("\(String(format: "%.2f", self.bill.payedValue!))")
+                                            .font(.body)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                                    }
+                                }
+                                
                             }
                             
                             Spacer()
@@ -69,6 +121,7 @@ struct BillView: View {
                                 Button {
                                     goToListView = true;
                                 } label : {
+                                    Image(systemName: "arrow.left")
                                     Text("Back")
                                 }
                                     .buttonStyle(.bordered)
@@ -76,13 +129,19 @@ struct BillView: View {
                                     .foregroundColor(.white)
                                 
                                 Button {
-                                    self.billViewModel.updateBillPayedValue(uid: self.uid, payedValue: self.sliderValue) { result in
+                                    self.billViewModel.updateBillPayedValue(uid: self.uid, payedValue: self.sliderValue, billValue: self.bill.value!) { result in
                                         if (result == "") {
-                                            goToListView = true;
+                                            if (self.sliderValue == self.bill.value!) {
+                                                self.checkbox = true;
+                                            }
+                                            //goToListView = true;
                                         }
+                                        
                                     }
+                                    
                                 } label : {
                                     Text("Save")
+                                    Image(systemName: "arrow.forward")
                                 }
                                     .buttonStyle(.bordered)
                                     .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
@@ -95,7 +154,12 @@ struct BillView: View {
                         }
                         
                     )
+                
                 Text(self.uid)
+                    .font(.system(size: 11))
+                    .foregroundColor(.white)
+                    .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                    .multilineTextAlignment(.center)
                 
                 Spacer()
                 

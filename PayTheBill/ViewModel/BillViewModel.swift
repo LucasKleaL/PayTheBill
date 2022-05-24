@@ -18,13 +18,15 @@ class BillViewModel: ObservableObject {
     private var db = Firestore.firestore();
     
     func addBill(userUid: String, billOwner: String, billCategory: String, title: String, desc: String, value: Float, parcels: Int, completion: @escaping(String) -> Void) {
-        let docRef = db.collection("Bills").document();
         
         let datetime = Date();
         let format = DateFormatter();
         format.timeZone = .current;
         format.dateFormat = "yyyy-MM-dd' 'HH:mm";
         let creationDate = format.string(from: datetime);
+        let billUid = creationDate.replacingOccurrences(of: " ", with: "") + userUid;
+        
+        let docRef = db.collection("Bills").document(billUid);
         
         print("datetime \(creationDate)");
         
@@ -164,7 +166,7 @@ class BillViewModel: ObservableObject {
         }
     }
     
-    func updateBillPayedValue(uid: String, payedValue: Float, completion: @escaping(String) -> Void) {
+    func updateBillPayedValue(uid: String, payedValue: Float, billValue: Float, completion: @escaping(String) -> Void) {
         let docRef = db.collection("Bills").document(uid);
         
         docRef.updateData(["payedValue": payedValue]) {error in
@@ -175,6 +177,27 @@ class BillViewModel: ObservableObject {
             else {
                 print("Sucessfully update bill document with payed value.")
                 completion("");
+            }
+        }
+        
+        if (payedValue == billValue) {
+            
+            let datetime = Date();
+            let format = DateFormatter();
+            format.timeZone = .current;
+            format.dateFormat = "yyyy-MM-dd' 'HH:mm";
+            let creationDate = format.string(from: datetime);
+            
+            docRef.updateData(["finishDate": creationDate]) {error in
+                
+                if let error = error {
+                    print("Error updating bill payed finishdate document: \(error)")
+                    completion("Error writing bill to user document: \(error)");
+                }
+                else {
+                    print("Sucessfully update bill document with finishdate value.")
+                    completion("");
+                }
             }
         }
     }
