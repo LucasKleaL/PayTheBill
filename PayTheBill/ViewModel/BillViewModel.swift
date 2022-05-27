@@ -15,6 +15,7 @@ class BillViewModel: ObservableObject {
     @Published var bill = BillModel();
     @Published var bills = [BillModel()];
     @Published var currentUserBills = [BillModel()];
+    @Published var userActiveBills = 0;
     private var db = Firestore.firestore();
     
     func addBill(userUid: String, billOwner: String, billCategory: String, title: String, desc: String, value: Float, parcels: Int, completion: @escaping(String) -> Void) {
@@ -22,7 +23,7 @@ class BillViewModel: ObservableObject {
         let datetime = Date();
         let format = DateFormatter();
         format.timeZone = .current;
-        format.dateFormat = "yyyy-MM-dd' 'HH:mm";
+        format.dateFormat = "yyyy-MM-dd' 'HH:mm:ss";
         let creationDate = format.string(from: datetime);
         let billUid = creationDate.replacingOccurrences(of: " ", with: "") + userUid;
         
@@ -195,7 +196,56 @@ class BillViewModel: ObservableObject {
                     completion("Error writing bill to user document: \(error)");
                 }
                 else {
-                    print("Sucessfully update bill document with finishdate value.")
+                    print("Sucessfully update bill document with finishdate value.");
+                    self.userViewModel.fetchUser() { user in
+                        self.removeBillFromUser(billUid: uid) { result in }
+                    }
+                    completion("");
+                }
+            }
+        }
+    }
+    
+    func deleteBill(billUid: String, finishDate: String, completion: @escaping(String) -> Void) {
+        //deleting bill document
+        print("delete finishDate \(finishDate)")
+        db.collection("Bills").document(billUid).delete() { err in
+            if let err = err {
+                print("Error deleting bill document: \(err)")
+                completion("Error deleting bill document: \(err)");
+            }
+            else {
+                print("Bill document successfully deleted!")
+                if (finishDate == "") {
+                    self.removeBillFromUser(billUid: billUid) { result in }
+                }
+                completion("");
+            }
+        }
+    }
+    
+    func removeBillFromUser(billUid: String, completion: @escaping(String) -> Void) {
+        let userUid = Auth.auth().currentUser?.uid;
+        let docRef = db.collection("Users").document(userUid ?? "");
+        var userBills = [""];
+        
+        //Getting user data
+        userViewModel.fetchUser() { user in
+            userBills = user.userBills!
+            
+            //deleting the billuid from array
+            let billIndex = userBills.firstIndex(of: billUid)
+            
+            userBills.remove(at: billIndex!)
+            
+            //Adding the bill into user document
+            docRef.updateData(["bills": userBills]) {error in
+                if let error = error {
+                    print("Error deleting bill to user document: \(error)")
+                    completion("Error deleting bill to user document: \(error)");
+                }
+                else {
+                    print("Successfully Deleting To User Document.")
                     completion("");
                 }
             }

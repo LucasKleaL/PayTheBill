@@ -112,15 +112,29 @@ struct ListView: View {
                                                     .padding(EdgeInsets(top: 1, leading: 30, bottom: 5, trailing: 0))
                                                 
                                                 NavigationLink(destination: BillView(uid: bill.uid ?? "", userName: self.currentDisplayName, bill: bill), isActive: ($goToBillView)) {
-                                                    Button {
-                                                        goToBillView = true;
-                                                    } label : {
-                                                        Text("Pay Bill")
-                                                        Image(systemName: "dollarsign.circle")
+                                                    
+                                                    if (bill.finishDate != "") {
+                                                        Button {
+                                                            goToBillView = true;
+                                                        } label : {
+                                                            Text("View Bill")
+                                                            Image(systemName: "checkmark.square")
+                                                        }
+                                                        .buttonStyle(.bordered)
+                                                        .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                                                        .foregroundColor(.white)
                                                     }
-                                                    .buttonStyle(.bordered)
-                                                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-                                                    .foregroundColor(Color("InteractionPink"))
+                                                    else { //if not full payed
+                                                        Button {
+                                                            goToBillView = true;
+                                                        } label : {
+                                                            Text("Pay Bill")
+                                                            Image(systemName: "dollarsign.circle")
+                                                        }
+                                                        .buttonStyle(.bordered)
+                                                        .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                                                        .foregroundColor(Color("InteractionPink"))
+                                                    }
                                                     
                                                 }
                                                 

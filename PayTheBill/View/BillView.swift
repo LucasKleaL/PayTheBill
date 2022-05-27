@@ -18,6 +18,8 @@ struct BillView: View {
     @State var sliderValue: Float = 0;
     @State var goToListView = false;
     @State var checkbox = false;
+    @State var showAlert = false;
+    @State var alertContent = "";
     
     var body: some View {
         ZStack {
@@ -151,6 +153,35 @@ struct BillView: View {
                             
                             Spacer()
                             
+                            Button {
+                                billViewModel.deleteBill(billUid: self.uid, finishDate: self.bill.finishDate!) { result in
+                                    if (result != "") {
+                                        self.alertContent = result;
+                                        self.showAlert = true;
+                                    }
+                                    else {
+                                        self.alertContent = "Bill successfully deleted.";
+                                        self.showAlert = true;
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 30))
+                                    .foregroundColor(Color("InteractionPink"))
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                            }.alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text("Delete Bill Result"),
+                                    message: Text(self.alertContent),
+                                    dismissButton: .default(Text("Ok")) {
+                                        if (self.alertContent == "Bill successfully deleted.") {
+                                            goToListView = true;
+                                        }
+                                    }
+                                )
+                            }
+                            
                         }
                         
                     )
@@ -169,7 +200,7 @@ struct BillView: View {
             
         }
         .navigationBarBackButtonHidden(true)
-        .navigationViewStyle(.stack)
+        //.navigationViewStyle(.stack)
         .edgesIgnoringSafeArea(.all)
     }
                 

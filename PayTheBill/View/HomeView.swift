@@ -17,6 +17,7 @@ struct HomeView: View {
     @State var goToListView = false;
     @State var currentUserName = "";
     @State var currentUserBills = [];
+    @State var userActiveBills = 0;
     let db = Firestore.firestore();
     
     var body: some View {
@@ -93,27 +94,6 @@ struct HomeView: View {
                             }
                         )
                     
-                    /*
-                    VStack {
-                        ForEach(billViewModel.bills, id: \.uid) { bill in
-                            
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(Color("InteractionPink"))
-                                .opacity(0.5)
-                                .frame(width: calculatePercentage(value: UIScreen.main.bounds.width, percentVal: 40), height: 100)
-                                .overlay(
-                                    Text(bill.billOwner ?? "")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .padding(.all)
-                                        .foregroundColor(.white)
-                                )
-                            
-                        }
-
-                    }
-                    */
-                    
                     Spacer()
                     
                     // footer component
@@ -125,6 +105,7 @@ struct HomeView: View {
             .navigationViewStyle(.stack)
             .onAppear {
                 //
+                billViewModel.fetchBills() { bill in }
             }
                      
     }
